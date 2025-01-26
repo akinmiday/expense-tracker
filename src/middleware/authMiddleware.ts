@@ -17,19 +17,21 @@ export const authMiddleware = (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): void => {
   const token = req.header("Authorization")?.replace("Bearer ", "");
 
   if (!token) {
-    return res.status(401).json({ error: "Access denied. No token provided." });
+    res.status(401).json({ error: "Access denied. No token provided." });
+    return;
   }
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
-    req.userId = decoded.userId;
-    next();
+    req.userId = decoded.userId; // Attach userId to the request object
+    next(); // Pass control to the next middleware or route handler
   } catch (error) {
     console.error("Error verifying token:", error);
     res.status(401).json({ error: "Invalid token." });
+    return;
   }
 };

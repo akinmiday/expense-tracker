@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express-serve-static-core";
+import { Request, Response, NextFunction } from "express";
 import Expense from "../models/Expense";
 import {
   analyzeExpense,
@@ -17,13 +17,20 @@ export const addExpense = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const { amount, description, date, userId } = req.body;
+  const { amount, description, date } = req.body;
 
   // Validate request body
-  if (!amount || !description || !userId) {
-    res
-      .status(400)
-      .json({ error: "amount, description, and userId are required." });
+  if (!amount || !description) {
+    res.status(400).json({ error: "amount and description are required." });
+    return;
+  }
+
+  // Extract userId from the authenticated user
+  const userId = req.userId;
+
+  // Ensure userId is defined
+  if (!userId) {
+    res.status(401).json({ error: "Unauthorized. User ID is missing." });
     return;
   }
 
@@ -37,7 +44,7 @@ export const addExpense = async (
       description,
       category: analysis.category || "Uncategorized",
       date: date || new Date(),
-      user: userId,
+      user: userId, // Associate the expense with the authenticated user
     });
 
     // Save the expense to the database
@@ -59,25 +66,32 @@ export const getSpendingInsights = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const { userId, startDate, endDate } = req.body;
+  const { startDate, endDate } = req.body;
 
   // Validate request body
-  if (!userId || !startDate || !endDate) {
-    res
-      .status(400)
-      .json({ error: "userId, startDate, and endDate are required." });
+  if (!startDate || !endDate) {
+    res.status(400).json({ error: "startDate and endDate are required." });
+    return;
+  }
+
+  // Extract userId from the authenticated user
+  const userId = req.userId;
+
+  // Ensure userId is defined
+  if (!userId) {
+    res.status(401).json({ error: "Unauthorized. User ID is missing." });
     return;
   }
 
   try {
-    // Get spending data
+    // Get spending data for the authenticated user
     const totalSpending = await getTotalSpending(
-      userId,
+      userId, // userId is guaranteed to be a string here
       new Date(startDate),
       new Date(endDate)
     );
     const categorySpending = await getCategoryWiseSpending(
-      userId,
+      userId, // userId is guaranteed to be a string here
       new Date(startDate),
       new Date(endDate)
     );

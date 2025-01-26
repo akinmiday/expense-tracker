@@ -3,6 +3,7 @@ import {
   addExpense,
   getSpendingInsights,
 } from "../controllers/expenseController";
+import { authMiddleware } from "../middleware/authMiddleware";
 
 const router = express.Router();
 
@@ -17,7 +18,7 @@ const router = express.Router();
  *   "userId": "123"
  * }
  */
-router.post("/expenses", addExpense);
+router.post("/expenses", authMiddleware, addExpense);
 
 /**
  * Route to get spending insights for a specific time period
@@ -29,6 +30,6 @@ router.post("/expenses", addExpense);
  *   "endDate": "2023-10-31"
  * }
  */
-router.post("/expenses/insights", getSpendingInsights);
+router.post("/expenses/insights", authMiddleware, getSpendingInsights);
 
 export default router;

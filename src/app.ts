@@ -3,11 +3,12 @@ import cors from "cors";
 import expenseRoutes from "./routes/expenseRoutes";
 import userRoutes from "./routes/userRoutes";
 import { connectToDatabase } from "./config/database";
+import { corsOptions } from "./config/corOptions";
 
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Routes
