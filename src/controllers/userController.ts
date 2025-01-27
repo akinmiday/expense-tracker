@@ -45,8 +45,16 @@ export const registerUser = async (
       expiresIn: "1h",
     });
 
-    // Return the user and token
-    res.status(201).json({ user, token });
+    // Set the token as an HTTP-only cookie
+    res.cookie("token", token, {
+      httpOnly: true, // Prevent client-side access
+      // secure: process.env.NODE_ENV === "production", // Use secure cookies in production
+      sameSite: "strict", // Protect against CSRF attacks
+      maxAge: 60 * 60 * 1000, // 1 hour
+    });
+
+    // Return the user data
+    res.status(201).json({ message: "Registration successful", user });
   } catch (error) {
     console.error("Error registering user:", error);
     res.status(500).json({ error: "Failed to register user." });
@@ -85,10 +93,38 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
       expiresIn: "1h",
     });
 
-    // Return the user and token
-    res.status(200).json({ user, token });
+    // Set the token as an HTTP-only cookie
+    res.cookie("token", token, {
+      httpOnly: true, // Prevent client-side access
+      // secure: process.env.NODE_ENV === "production", // Use secure cookies in production
+      sameSite: "strict", // Protect against CSRF attacks
+      maxAge: 60 * 60 * 1000, // 1 hour
+    });
+
+    // Return the user data
+    res.status(200).json({ message: "Login successful", user });
   } catch (error) {
     console.error("Error logging in user:", error);
     res.status(500).json({ error: "Failed to log in user." });
+  }
+};
+
+/**
+ * Logout the user
+ */
+export const logoutUser = (req: Request, res: Response): void => {
+  try {
+    // Clear the JWT token cookie
+    res.clearCookie("token", {
+      httpOnly: true, // Make sure it's cleared as an HTTP-only cookie
+      sameSite: "strict", // SameSite protection
+      maxAge: 0, // Set expiration to 0 to immediately clear it
+    });
+
+    // Send response
+    res.status(200).json({ message: "Logout successful" });
+  } catch (error) {
+    console.error("Error logging out user:", error);
+    res.status(500).json({ error: "Failed to log out user." });
   }
 };

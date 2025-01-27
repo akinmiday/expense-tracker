@@ -1,0 +1,2 @@
+27012025  	10:06:51	f9c634d9-57d1-4d32-b286-c0b370772a07	POST	unknown	/api/users/login
+27012025  	10:06:56	56e0c6c3-1580-426e-9580-0017c20f7112	GET	unknown	/api/expenses
