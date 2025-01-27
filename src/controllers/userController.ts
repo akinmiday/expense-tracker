@@ -49,7 +49,7 @@ export const registerUser = async (
     res.cookie("token", token, {
       httpOnly: true, // Prevent client-side access
       // secure: process.env.NODE_ENV === "production", // Use secure cookies in production
-      sameSite: "strict", // Protect against CSRF attacks
+      // sameSite: "strict", // Protect against CSRF attacks
       maxAge: 60 * 60 * 1000, // 1 hour
     });
 
@@ -97,7 +97,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
     res.cookie("token", token, {
       httpOnly: true, // Prevent client-side access
       // secure: process.env.NODE_ENV === "production", // Use secure cookies in production
-      sameSite: "strict", // Protect against CSRF attacks
+      // sameSite: "strict", // Protect against CSRF attacks
       maxAge: 60 * 60 * 1000, // 1 hour
     });
 
@@ -117,7 +117,7 @@ export const logoutUser = (req: Request, res: Response): void => {
     // Clear the JWT token cookie
     res.clearCookie("token", {
       httpOnly: true, // Make sure it's cleared as an HTTP-only cookie
-      sameSite: "strict", // SameSite protection
+      // sameSite: "strict", // SameSite protection
       maxAge: 0, // Set expiration to 0 to immediately clear it
     });
 

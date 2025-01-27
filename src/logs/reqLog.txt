@@ -1,2 +1,11 @@
 27012025  	10:06:51	f9c634d9-57d1-4d32-b286-c0b370772a07	POST	unknown	/api/users/login
 27012025  	10:06:56	56e0c6c3-1580-426e-9580-0017c20f7112	GET	unknown	/api/expenses
+27012025  	14:33:12	21ab4b99-c0d6-4075-9f53-0feb6d32ac8b	POST	unknown	/api/expenses
+27012025  	14:33:21	727deefa-80ed-43d3-93f2-ebf4161aebf9	POST	unknown	/api/users/login
+27012025  	14:33:25	97d530ba-b937-4366-8f2f-9c3d6a959842	POST	unknown	/api/expenses
+27012025  	14:33:59	047cfdf7-b38d-40b7-a731-825dba5bddc0	GET	unknown	/api/expenses
+27012025  	14:34:49	6b6d11a4-bd1c-42b8-af1f-81b2509e627e	POST	unknown	/api/logout
+27012025  	14:34:52	ce0a29df-a927-4a77-ba64-296996074b70	GET	unknown	/api/expenses
+27012025  	16:15:38	df4eac59-f510-4a2a-aab6-a090ef7c3317	POST	unknown	/api/users/login
+27012025  	16:34:46	2b6ff23a-7e69-42ee-bbe3-b97178e8bf6a	POST	http://localhost:5173	/api/users/login
+27012025  	16:36:17	525f6523-c983-47ba-846a-ab6bb43bf4f0	POST	http://localhost:5173	/api/users/register
