@@ -21,6 +21,7 @@ const openai = new OpenAI({
  * @param description - The expense description (e.g., "Lunch at McDonald's")
  * @returns Analysis result (e.g., category, insights)
  */
+
 export const analyzeExpense = async (description: string) => {
   try {
     const completion = await openai.chat.completions.create({
@@ -38,9 +39,24 @@ export const analyzeExpense = async (description: string) => {
       model: "deepseek-chat",
     });
 
-    // Parse the response
-    const response = completion.choices[0].message.content;
-    return JSON.parse(response || '{"category": "Uncategorized"}');
+    // Ensure response is not null
+    const response = completion.choices[0]?.message.content;
+
+    if (!response) {
+      throw new Error("Empty response from DeepSeek API");
+    }
+
+    // Log the raw response content
+    console.log("Raw response from DeepSeek:", response);
+
+    // Remove markdown syntax and attempt to parse the JSON
+    const cleanedResponse = response.replace(/^```json\s|\s```$/g, "").trim();
+    try {
+      return JSON.parse(cleanedResponse || '{"category": "Uncategorized"}');
+    } catch (parseError) {
+      console.error("Error parsing JSON response:", parseError);
+      throw new Error("Invalid JSON response from DeepSeek API");
+    }
   } catch (error) {
     console.error("DeepSeek API error:", error);
     throw new Error("Failed to analyze expense description");
