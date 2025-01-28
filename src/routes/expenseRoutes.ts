@@ -3,6 +3,7 @@ import {
   addExpense,
   getSpendingInsights,
   getUserExpenses,
+  getPreviousInsights,
 } from "../controllers/expenseController";
 import { authMiddleware } from "../middleware/authMiddleware";
 
@@ -54,7 +55,7 @@ router.post("/expenses", authMiddleware, addExpense);
  *   "error": "Missing required query parameters: startDate, endDate"
  * }
  */
-router.get("/expenses/insights", authMiddleware, getSpendingInsights);
+router.post("/expenses/insights", authMiddleware, getSpendingInsights);
 
 /**
  * Route to get all expenses for the authenticated user
@@ -77,5 +78,7 @@ router.get("/expenses/insights", authMiddleware, getSpendingInsights);
  * }
  */
 router.get("/expenses", authMiddleware, getUserExpenses);
+
+router.get("/expenses/insights/previous", authMiddleware, getPreviousInsights);
 
 export default router;

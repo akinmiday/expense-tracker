@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import Expense from "../models/Expense";
+import Insights from "../models/Insights";
 import {
   analyzeExpense,
   generateSpendingInsights,
@@ -81,7 +82,6 @@ export const getSpendingInsights = async (
   const { startDate, endDate } = req.body;
   const userId = req.userId;
 
-  // Validate required fields
   if (!userId || !startDate || !endDate) {
     const missingFields = [
       !userId && "userId",
@@ -116,7 +116,17 @@ export const getSpendingInsights = async (
       timePeriod: `${startDate} to ${endDate}`,
     });
 
-    // Return the response
+    // Save insights to the database
+    const insight = new Insights({
+      user: userId,
+      timePeriod: `${startDate} to ${endDate}`,
+      insights,
+      totalSpending,
+      categorySpending,
+    });
+    await insight.save();
+
+    // Return the insights
     res.status(200).json({ totalSpending, categorySpending, insights });
   } catch (error) {
     console.error("Error fetching spending insights:", {
@@ -126,6 +136,37 @@ export const getSpendingInsights = async (
     });
     res.status(500).json({
       error: "Failed to fetch spending insights. Please try again later.",
+    });
+  }
+};
+
+/**
+ * Get all previous insights for the authenticated user.
+ */
+export const getPreviousInsights = async (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  const userId = req.userId;
+
+  if (!userId) {
+    res.status(401).json({ error: "Unauthorized. User ID is missing." });
+    return;
+  }
+
+  try {
+    // Fetch all insights for the authenticated user
+    const insights = await Insights.find({ user: userId }).sort({
+      createdAt: -1,
+    });
+
+    // Return the insights
+    res.status(200).json(insights);
+  } catch (error) {
+    console.error("Error fetching previous insights:", { error, userId });
+    res.status(500).json({
+      error: "Failed to fetch previous insights. Please try again later.",
     });
   }
 };
