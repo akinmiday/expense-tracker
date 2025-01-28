@@ -102,7 +102,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
     });
 
     // Return the user data
-    res.status(200).json({ message: "Login successful", user });
+    res.status(200).json({ message: "Login successful", token });
   } catch (error) {
     console.error("Error logging in user:", error);
     res.status(500).json({ error: "Failed to log in user." });
@@ -126,5 +126,24 @@ export const logoutUser = (req: Request, res: Response): void => {
   } catch (error) {
     console.error("Error logging out user:", error);
     res.status(500).json({ error: "Failed to log out user." });
+  }
+};
+
+// check auth
+
+export const checkAuth = async (req: Request, res: Response): Promise<void> => {
+  const token = req.cookies.token;
+
+  if (!token) {
+    res.status(401).json({ isAuthenticated: false });
+    return;
+  }
+
+  try {
+    // Verify the token
+    const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
+    res.status(200).json({ isAuthenticated: true, userId: decoded.userId });
+  } catch (error) {
+    res.status(401).json({ isAuthenticated: false });
   }
 };

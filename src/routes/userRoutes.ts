@@ -3,6 +3,7 @@ import {
   registerUser,
   loginUser,
   logoutUser,
+  checkAuth,
 } from "../controllers/userController";
 
 const router = express.Router();
@@ -32,5 +33,8 @@ router.post("/users/login", loginUser);
 
 // Logout route
 router.post("/logout", logoutUser);
+
+// Route to check if the user is authenticated
+router.get("users/check-auth", checkAuth);
 
 export default router;
