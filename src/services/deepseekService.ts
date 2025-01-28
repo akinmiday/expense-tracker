@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY;
+const MODEL_NAME = process.env.DEEPSEEK_MODEL || "deepseek-chat";
 
 if (!DEEPSEEK_API_KEY) {
   throw new Error(
@@ -36,7 +37,7 @@ export const analyzeExpense = async (description: string) => {
           content: `Categorize this expense: "${description}". Return a JSON object with a "category" field.`,
         },
       ],
-      model: "deepseek-chat",
+      model: MODEL_NAME,
     });
 
     // Ensure response is not null
@@ -90,7 +91,7 @@ export const generateSpendingInsights = async (data: {
           )}. Provide insights and recommendations.`,
         },
       ],
-      model: "deepseek-chat",
+      model: MODEL_NAME,
     });
 
     return completion.choices[0].message.content || "No insights available.";
