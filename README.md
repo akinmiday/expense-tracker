@@ -279,6 +279,15 @@ expense-tracker-api/
 
 ---
 
+## **Client/Frontend Repository**
+
+- To use and contribute to the frontend for this API, visit the [**Expense Tracker Client Repository**](https://github.com/akinmiday/expense-tracker-client).
+
+![Expense Tracker Logo](assets/image4.png)
+![Expense Tracker Logo](assets/image1.png)
+![Expense Tracker Logo](assets/image2.png)
+![Expense Tracker Logo](assets/image3.png)
+
 ## **Contributing**
 
 Contributions are welcome! To contribute:
