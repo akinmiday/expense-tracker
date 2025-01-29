@@ -58,6 +58,7 @@ PORT=5000
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret_key
 DEEPSEEK_API_KEY=your_deepseek_api_key
+DEEPSEEK_MODEL= the model of deepseek. default is deepseek_chat you can leave empty
 ```
 
 ### Start the Server
