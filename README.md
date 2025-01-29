@@ -1,4 +1,4 @@
-# Expense Tracker API
+# Expense Tracker & Analyzer With DEEPSEEK AI Integration
 
 ## Overview
 
@@ -28,6 +28,8 @@ The **Expense Tracker** API is a RESTful backend service designed to help users 
 
 ### Prerequisites
 
+- Deepseek API key
+
 Ensure you have the following installed:
 
 - [Node.js](https://nodejs.org/)
@@ -37,8 +39,8 @@ Ensure you have the following installed:
 ### Clone the Repository
 
 ```sh
-git clone https://github.com/yourusername/expense-tracker-api.git
-cd expense-tracker-api
+git clone https://github.com/akinmiday/expense-tracker.git
+cd expense-tracker
 ```
 
 ### Install Dependencies
