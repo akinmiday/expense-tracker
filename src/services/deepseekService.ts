@@ -88,7 +88,7 @@ export const generateSpendingInsights = async (data: {
             data.totalSpending
           }. Category-wise spending: ${JSON.stringify(
             data.categorySpending
-          )}. Provide insights and recommendations.`,
+          )}. Provide insights and recommendations. response should be valid JSON.`,
         },
       ],
       model: MODEL_NAME,
