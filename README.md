@@ -16,7 +16,7 @@ The **Expense Tracker** API is a RESTful backend service designed to help users 
 
 ## Technologies Used
 
-- **AI Processing DeepSeek** AI for categorization and analysis
+- **DeepSeek AI Processing** For categorization and analysis
 - **Node.js** with **Express.js** (Backend Framework)
 - **MongoDB** with **Mongoose** (Database & ODM)
 - **JWT Authentication** (Secure User Login)
